@@ -1,0 +1,154 @@
+#include<bits/stdc++.h>
+using namespace std;
+char arr[3][3];
+
+class Board{
+    public:
+        
+        int player;
+        int currentplayer;
+    
+        Board()
+        {
+            player=2;
+            currentplayer=0;
+            
+        }
+    void initialize()
+    {
+        for(int i=0;i<3;i++)
+        {
+            for(int j=0;j<3;j++)
+            {
+                arr[i][j]=' ';
+            }
+        }
+    }
+    
+    void printboard()
+    { 
+        for(int i=0;i<3;i++)
+        {cout<<"|";
+            for(int j=0;j<3;j++)
+            {
+                cout<<arr[i][j];
+                cout<<"|";
+            }
+            cout<<endl;
+            
+        }
+        
+    }
+
+    bool check(char c)
+    {
+        for(int i=0;i<3;i++){
+        //column
+            if(arr[i][0]==c && arr[i][1]==c && arr[i][2]==c){
+                return true;
+            }
+        }
+        
+//row   
+    for(int i=0;i<3;i++){
+        
+            if(arr[0][i]==c && arr[1][i]==c && arr[2][i]==c){
+                return true;
+            }
+        }
+        
+
+        
+            if(arr[0][0]==c && arr[1][1]==c && arr[2][2]==c){
+                return true;
+            }
+
+            if(arr[2][0]==c && arr[1][1]==c && arr[0][2]==c){
+                return true;
+            }
+
+            return false;
+        
+    }
+    bool isnotdraw()
+    {
+        for(int i=0;i<3;i++){
+            
+            for(int j=0;j<3;j++)
+            {
+                if(arr[i][j]==' ')
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+
+
+
+};
+
+int main(){
+    Board b;
+    b.initialize();
+    cout<<"---------HELLO TO TIC TAC TOE GAME------------------\n"<<endl;
+    bool gameover=false;
+
+    while((!gameover) && b.isnotdraw())
+        {b.printboard();
+        
+        int pos;
+        cout<<"current player is:"<<b.currentplayer<<endl;
+        cout<<"Enter the position you want to enter between 0 to 8"<<endl;
+        cin>>pos;
+        cout<<"Position:"<<pos<<endl;
+        if(pos>8)
+        {
+            cout<<"Invalid position.Try Again!!"<<endl;
+            
+        }
+        else
+        {
+            if(arr[pos/3][pos%3]!=' ')
+            {
+                cout<<"This position is already filled.TRY AGAIN";
+                
+            }
+            else{
+                if(b.currentplayer==0){
+                arr[pos/3][pos%3]='O';
+                 gameover=b.check('O');
+                 
+                b.currentplayer=!(b.currentplayer);
+                
+                }
+                else
+                {
+                arr[pos/3][pos%3]='X';
+                gameover=b.check('X');
+                b.currentplayer=!(b.currentplayer);
+                }
+                
+                if(gameover)
+                {b.printboard();
+                    cout<<"--------------HURRAY PLAYER "<<!b.currentplayer<<"  WON!!----------------"<<endl;
+                }
+                
+            }
+        }
+
+
+    }
+    
+    if(!b.isnotdraw())
+    {
+        b.printboard();
+        cout<<"------------MATCH IS DRAW!!!--------------"<<endl;
+    }
+
+   
+    
+}
